@@ -1,6 +1,7 @@
-const bcrypt = ('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+require("dotenv").config(); 
 
 exports.signup = (req, res, next) => {
       bcrypt.hash(req.body.password, 10)
@@ -35,7 +36,7 @@ exports.signup = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(  // la fonction sign de jsonwebtoken pour chiffrer un nouveau token
                             { userId: user._id },
-                            'RANDOM_TOKEN_SECRET',//RANDOM_SECRET_KEY pour crypter notre token n). Puisque cette chaîne sert de clé pour le chiffrement et le déchiffrement du token, elle doit être difficile à deviner, sinon n’importe qui pourrait générer un token en se faisant passer pour notre serveur.
+                            process.env.KEY,//RANDOM_SECRET_KEY pour crypter notre token n). Puisque cette chaîne sert de clé pour le chiffrement et le déchiffrement du token, elle doit être difficile à deviner, sinon n’importe qui pourrait générer un token en se faisant passer pour notre serveur.
                             { expiresIn: '24h' }//durée de validité du token 
                         )
                     });

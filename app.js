@@ -6,12 +6,11 @@ const stuffRoutes = require('./routes/stuff')
 const userRoutes = require('./routes/user')
 //import mongoss
 const mongoose = require('mongoose')
-
-
+require("dotenv").config(); //process.env.DBLINK
 app.use(express.json());// permettre d'acceder au coeur de la requette (req.body == coeur de requette)
 
 
-mongoose.connect('mongodb+srv://sajed:sajed2009@cluster0.husfnnb.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect(process.env.DBLINK, //process c'est un  methode de conf
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))

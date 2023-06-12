@@ -1,17 +1,19 @@
 const express = require('express');
+const auth = require('../middleware/auth')
+const multer = require('../middleware/multer-config')
 const router = express.Router();
 
 const stuffCtrl = require('../controllers/stuff');
 
-router.get('/', stuffCtrl.getAllStuff );
+router.get('/', auth , stuffCtrl.getAllStuff );
 
-router.post('/',stuffCtrl.createThing );
+router.post('/', auth , multer , stuffCtrl.createThing );
 
-router.get('/:id', stuffCtrl.getOneThing);
+router.get('/:id', auth , stuffCtrl.getOneThing);
 
-router.put('/:id',stuffCtrl.modifyThing );
+router.put('/:id', auth , stuffCtrl.modifyThing );
 
-router.delete('/:id',stuffCtrl.deleteThing);
+router.delete('/:id' , auth ,stuffCtrl.deleteThing);
 //La méthodeexpress.Router()  vous permet de créer 
 //des routeurs séparés pour chaque route principale de votre application – vous y enregistrez ensuite les routes individuelles.
 
